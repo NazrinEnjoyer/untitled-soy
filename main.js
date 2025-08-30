@@ -15,15 +15,17 @@ let health = 10;
 let money = 0;
 let happy = 0; // stays at 0
 let ropeChance = 0;
+let employed = true;
 
 // --- Update UI ---
-function updateUI() {
+function updateUI(status = getStatusLine()) 
+{
   document.getElementById("Hunger").textContent = "Hunger: " + hunger;
   document.getElementById("Health").textContent = "Health: " + health;
   document.getElementById("MoneyCount").textContent = "Money: $" + money;
   document.getElementById("Happy").textContent = "Happy: " + happy;
   document.getElementById("RopeChance").textContent = "Ropechance: %" + ropeChance;
-  document.getElementById("Status").textContent = "Status: " + getStatusLine();
+  document.getElementById("Status").textContent = "Status: " + status;
 
   checkGameOver(); // check if ropeChance maxed out
 }
@@ -45,7 +47,6 @@ function getStatusLine() {
     "It never even began...",
     "I wish I was gooning...",
     "I miss my computer...",
-    
   ];
   return statuses[Math.floor(Math.random() * statuses.length)];
 }
@@ -80,13 +81,16 @@ function play() {
 
 function workFunction() {
   playClick();
-  if (Math.random() < 0.5) {
+  let status = "";
+  if (employed) {
     money += 200;
-  } else {
-    document.getElementById("Status").textContent = "Status: still unemployed...";
+    status = "I hate my job...";
+  } 
+  else {
+    status = "Still unemployed...";
   }
   ropeChance = Math.min(100, ropeChance + 5);
-  updateUI();
+  updateUI(status);
 }
 
 // --- Game Over ---
