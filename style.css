@@ -1,19 +1,76 @@
-body{
-    font-family: sans-serif;
+body {
+  font-family: sans-serif;
+  background: #d9d9d9;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column; /* stack banner on top */
+  align-items: center;
 }
 
-.statBox {
-  border: 1px solid;
-  margin-left: auto;
-  transition: 0.3s;
-  width: 20%;
-  margin-bottom: 1%;
+/* --- Banner at top --- */
+#banner {
+  width: 100%;
+  background: #222;
+  color: #fff;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 15px 0;
+  border-bottom: 3px solid #000;
+  letter-spacing: 2px;
 }
 
-.center {
-  margin: auto;
-  width: 75%;
-  border: 1px solid;
-  text-align:center;
+/* --- Game container centered below banner --- */
+#game-container {
+  width: 600px;
+  height: 500px;
+  background: #fff;
+  border: 2px solid black;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  margin-top: 20px; /* spacing below banner */
+}
+
+/* stats in top-right */
+#stats {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  text-align: right;
+}
+
+#stats h3 {
+  margin: 2px 0;
+  font-weight: normal;
+}
+
+/* wojak area center */
+#wojak-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#wojak {
+  max-height: 200px;
+}
+
+/* actions bar at bottom */
+#actions {
+  border-top: 1px solid #000;
   padding: 10px;
+  text-align: center;
+  background: #f0f0f0;
+}
+
+#actions button {
+  margin: 0 5px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
 }

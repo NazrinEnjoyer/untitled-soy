@@ -1,28 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chuddy simulator</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chuddy Simulator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="center">
-        <div class="statBox">   
-            <h1 id="Hunger">Hunger: %0</h1>
-            <h1 id="Health">Health: %0</h1>
-            <h1 id="MoneyCount">Money: $0</h1>
-            <h1 id="Status">Status: </h1>
-            <h1 id="Happy">Happy: 0</h1>
-            <h1 id="RopeChance">Ropechance: %0</h1>
-        </div>
-        <div class="center">
-            <button id="FeedButton" onclick="">Feed</button>
-            <button id="Showerbutton" onclick="">Shower</button>
-            <button id="PlayButton" onclick="">Play</button>
-            <button id="WorkButton" onclick="workFunction();">Work</button>
-        </div>
+
+  <!-- Banner -->
+  <header id="banner">
+   chuddy.simulator
+  </header>
+
+  <div id="game-container">
+
+    <!-- Stats in top-right -->
+    <div id="stats">
+      <h3 id="Hunger">Hunger: %0</h3>
+      <h3 id="Health">Health: %0</h3>
+      <h3 id="MoneyCount">Money: $0</h3>
+      <h3 id="Status">Status: </h3>
+      <h3 id="Happy">Happy: 0</h3>
+      <h3 id="RopeChance">Ropechance: %0</h3>
     </div>
-    <script src="main.js"></script>
+
+    <!-- Placeholder for Jak -->
+    <div id="wojak-area">
+      <img src="jaks/little_chudjak.png" alt="chudjak" id="wojak">
+    </div>
+
+    <!-- Buttons bar -->
+    <div id="actions">
+      <button id="FeedButton">Feed</button>
+      <button id="ShowerButton">Shower</button>
+      <button id="PlayButton">Play</button>
+      <button id="WorkButton" onclick="workFunction()">Work</button>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 </html>
+
