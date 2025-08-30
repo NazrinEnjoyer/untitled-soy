@@ -9,10 +9,17 @@
 <body>
 
   <!-- Banner -->
-  <header id="banner">
-   chuddy.simulator
-  </header>
+<div id="banner">
+  <marquee behavior="scroll" direction="left" scrollamount="8">
+    <span class="rainbow">♠️CHUD SIMULATOR 2025♠️</span>
+  </marquee>
+</div>
 
+
+  <!--ROPECEL -->
+  <div id="game-over">IT'S OVER</div>
+
+  <!-- Main Game Box -->
   <div id="game-container">
 
     <!-- Stats in top-right -->
@@ -25,21 +32,20 @@
       <h3 id="RopeChance">Ropechance: %0</h3>
     </div>
 
-    <!-- Placeholder for Jak -->
+    <!-- Wojak image -->
     <div id="wojak-area">
       <img src="jaks/little_chudjak.png" alt="chudjak" id="wojak">
     </div>
 
-    <!-- Buttons bar -->
+    <!-- Action buttons -->
     <div id="actions">
       <button id="FeedButton">Feed</button>
       <button id="ShowerButton">Shower</button>
       <button id="PlayButton">Play</button>
-      <button id="WorkButton" onclick="workFunction()">Work</button>
+      <button id="WorkButton">Work</button>
     </div>
   </div>
 
   <script src="main.js"></script>
 </body>
 </html>
-
