@@ -17,27 +17,12 @@ let happy = 0; // stays at 0
 let ropeChance = 0;
 let employed = true;
 
-// --- Update UI ---
-function updateUI(status = getStatusLine()) 
-{
-  document.getElementById("Hunger").textContent = "Hunger: " + hunger;
-  document.getElementById("Health").textContent = "Health: " + health;
-  document.getElementById("MoneyCount").textContent = "Money: $" + money;
-  document.getElementById("Happy").textContent = "Happy: " + happy;
-  document.getElementById("RopeChance").textContent = "Ropechance: %" + ropeChance;
-  document.getElementById("Status").textContent = "Status: " + status;
-
-  checkGameOver(); // check if ropeChance maxed out
-}
-
-// --- Quippy Status Lines ---
-function getStatusLine() {
-  const statuses = [
+const statusPools = {
+  statuses: [
     "just vibing...",
     "life is pain",
     "capitalism is a scam",
     "ate today, still sad",
-    "boss gave pizza party...",,
     "dreaming of escape...",
     "billions must die...",
     "this time I'm really going to do it...",
@@ -47,50 +32,101 @@ function getStatusLine() {
     "It never even began...",
     "I wish I was gooning...",
     "I miss my computer...",
-  ];
-  return statuses[Math.floor(Math.random() * statuses.length)];
+  ],
+  workStatusesEmployed: [
+    "I hate my job...",
+    "boss gave pizza party..."
+  ],
+  workStatusesUnEmployed: [
+    "Still unemployed..."
+  ],
+  playStatusesGood: [
+    "Today I played on the swings!"
+  ],
+  playStatusesBad: [
+    "Saw Stacy outside today..."
+  ],
+  showerStatuses: [
+    "Are daily showers really necessary?"
+  ],
+  feedStatusesGood: [
+    "Yummy!"
+  ],
+  feedStatusesBad: [
+    "Can't afford food..."
+  ],
+};
+
+// --- Update UI ---
+function updateUI(statusPool) 
+{
+  document.getElementById("Hunger").textContent = "Hunger: " + hunger;
+  document.getElementById("Health").textContent = "Health: " + health;
+  document.getElementById("MoneyCount").textContent = "Money: $" + money;
+  document.getElementById("Happy").textContent = "Happy: " + happy;
+  document.getElementById("RopeChance").textContent = "Ropechance: %" + ropeChance;
+  document.getElementById("Status").textContent = "Status: " + getStatusLine(statusPool);
+
+  checkGameOver(); // check if ropeChance maxed out
+}
+
+// --- Quippy Status Lines ---
+function getStatusLine(statusPool) {
+  const pool = statusPool;
+  if (!pool || pool.length === 0)
+  {
+    return "Fuck my chud life";
+  } 
+  return pool[Math.floor(Math.random() * pool.length)];
 }
 
 // --- Actions ---
 function feed() {
   playClick();
+  let statusPool;
   if (money >= 50) {
     money -= 50;
     hunger = Math.min(hunger + 5, 10);
+    statusPool = statusPools.feedStatusesGood;
   } else {
     ropeChance = Math.min(100, ropeChance + 5);
+    statusPool = statusPools.feedStatusesBad;
   }
-  updateUI();
+  updateUI(statusPool);
 }
 
 function shower() {
   playClick();
   health = Math.min(health + 5, 10);
-  updateUI();
+  updateUI(statusPools.showerStatuses);
 }
 
 function play() {
+  console.log("test");
   playClick();
+  let statusPool;
   if (Math.random() < 0.7) {
     ropeChance = Math.max(0, ropeChance - 5);
+    statusPool = statusPools.playStatusesGood;
   } else {
     ropeChance = Math.min(100, ropeChance + 2);
+    statusPool = statusPools.playStatusesBad;
   }
-  updateUI();
+  updateUI(statusPool);
 }
 
 function workFunction() {
   playClick();
-  let status = "";
+  let statusPool;
   if (employed) {
     money += 200;
-    status = "I hate my job...";
+    statusPool = statusPools.workStatusesEmployed;
   } 
   else {
-    status = "Still unemployed...";
+    statusPool = statusPools.workStatusesUnEmployed;
   }
   ropeChance = Math.min(100, ropeChance + 5);
-  updateUI(status);
+  updateUI(statusPool);
 }
 
 // --- Game Over ---
