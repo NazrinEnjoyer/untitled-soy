@@ -102,7 +102,6 @@ function shower() {
 }
 
 function play() {
-  console.log("test");
   playClick();
   let statusPool;
   if (Math.random() < 0.7) {
