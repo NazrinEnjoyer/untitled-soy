@@ -8,21 +8,58 @@ function playClick() {
   sound.play();
 }
 
-
 // --- Initial Stats ---
 let hunger = 10;
-let health = 10;
+let hygiene = 10;
 let money = 0;
 let happy = 0; // stays at 0
 let ropeChance = 0;
-let employed = true;
 
-const statusPools = {
-  statuses: [
+// --- Wagie Math
+
+let mathMin = 20;
+let mathMax = 60;
+let randomMath = Math.floor(Math.random() * (mathMax - mathMin + 1)) + mathMin;
+let message = 'Your Wage is $' + randomMath + ' Per Shift';
+
+alert(message);
+
+/* // -- Restart Button --
+function restart() {
+hunger = 10;
+hygiene = 10;
+money = 0;
+happy = 0; // stays at 0
+ropeChance = 0;
+} */
+// --- RopeChance Penalty for Low Hygiene or Hunger ---
+setInterval(() => {
+  if (hunger < 5 || hygiene < 5) {
+    ropeChance = Math.min(100, ropeChance + 5);
+    updateUI();
+  }
+}, 60000); // every minute
+
+// --- Update UI ---
+function updateUI() {
+  document.getElementById("Hunger").textContent = "Hunger: " + hunger;
+  document.getElementById("Hygiene").textContent = "hygiene: " + hygiene;
+  document.getElementById("MoneyCount").textContent = "Money: $" + money;
+  document.getElementById("Happy").textContent = "Happy: " + happy;
+  document.getElementById("RopeChance").textContent = "Ropechance: %" + ropeChance;
+  document.getElementById("Status").textContent = "Status: " + getStatusLine();
+
+  checkGameOver(); // check if ropeChance maxed out
+}
+
+// --- Stupid Status Lines ---
+function getStatusLine() {
+  const statuses = [
     "just vibing...",
     "life is pain",
     "capitalism is a scam",
     "ate today, still sad",
+    "boss gave pizza party...",,
     "dreaming of escape...",
     "billions must die...",
     "this time I'm really going to do it...",
@@ -32,100 +69,64 @@ const statusPools = {
     "It never even began...",
     "I wish I was gooning...",
     "I miss my computer...",
-  ],
-  workStatusesEmployed: [
-    "I hate my job...",
-    "boss gave pizza party..."
-  ],
-  workStatusesUnEmployed: [
-    "Still unemployed..."
-  ],
-  playStatusesGood: [
-    "Today I played on the swings!"
-  ],
-  playStatusesBad: [
-    "Saw Stacy outside today..."
-  ],
-  showerStatuses: [
-    "Are daily showers really necessary?"
-  ],
-  feedStatusesGood: [
-    "Yummy!"
-  ],
-  feedStatusesBad: [
-    "Can't afford food..."
-  ],
-};
-
-// --- Update UI ---
-function updateUI(statusPool) 
-{
-  document.getElementById("Hunger").textContent = "Hunger: " + hunger;
-  document.getElementById("Health").textContent = "Health: " + health;
-  document.getElementById("MoneyCount").textContent = "Money: $" + money;
-  document.getElementById("Happy").textContent = "Happy: " + happy;
-  document.getElementById("RopeChance").textContent = "Ropechance: %" + ropeChance;
-  document.getElementById("Status").textContent = "Status: " + getStatusLine(statusPool);
-
-  checkGameOver(); // check if ropeChance maxed out
-}
-
-// --- Quippy Status Lines ---
-function getStatusLine(statusPool) {
-  const pool = statusPool;
-  if (!pool || pool.length === 0)
-  {
-    return "Fuck my chud life";
-  } 
-  return pool[Math.floor(Math.random() * pool.length)];
+    "I want to kill myself...",
+    
+  ];
+  return statuses[Math.floor(Math.random() * statuses.length)];
 }
 
 // --- Actions ---
 function feed() {
   playClick();
-  let statusPool;
   if (money >= 50) {
     money -= 50;
     hunger = Math.min(hunger + 5, 10);
-    statusPool = statusPools.feedStatusesGood;
   } else {
     ropeChance = Math.min(100, ropeChance + 5);
-    statusPool = statusPools.feedStatusesBad;
   }
-  updateUI(statusPool);
+  updateUI();
 }
 
 function shower() {
   playClick();
-  health = Math.min(health + 5, 10);
-  updateUI(statusPools.showerStatuses);
+  hygiene = Math.min(hygiene + 5, 10);
+  updateUI();
 }
 
 function play() {
   playClick();
-  let statusPool;
-  if (Math.random() < 0.7) {
-    ropeChance = Math.max(0, ropeChance - 5);
-    statusPool = statusPools.playStatusesGood;
+  if (money >= 20) {
+    money -= 20;
+
+    // 70% chance ropeChance goes down, 30% chance it goes up slightly
+    if (Math.random() < 0.7) {
+      ropeChance = Math.max(0, ropeChance - 5);
+      alert("had fun");
+    } else {
+      ropeChance = Math.min(100, ropeChance + 2);
+      alert("cyberbullied..");
+    }
   } else {
-    ropeChance = Math.min(100, ropeChance + 2);
-    statusPool = statusPools.playStatusesBad;
+    // BROKE NIGGA ALERT
+    ropeChance = Math.min(100, ropeChance + 5);
+    alert("BROKE! NIGGA! ALERT!");
   }
-  updateUI(statusPool);
+
+  updateUI();
 }
+
 
 function workFunction() {
   playClick();
-  let statusPool;
-  if (employed) {
-    money += 200;
-    statusPool = statusPools.workStatusesEmployed;
-  } 
-  else {
-    statusPool = statusPools.workStatusesUnEmployed;
+  if (Math.random() < 0.5) {
+    money += randomMath;
+  } else {
+    document.getElementById("Status").textContent = "Status: still unemployed...";
   }
   ropeChance = Math.min(100, ropeChance + 5);
-  updateUI(statusPool);
+  hunger = Math.min(10, hunger -1);
+  hygiene = Math.min(10, hygiene -1);
+  updateUI();
 }
 
 // --- Game Over ---
@@ -147,14 +148,14 @@ function checkGameOver() {
 setInterval(() => {
   hunger = Math.max(0, hunger - 1);
   if (hunger === 0) {
-    health = Math.max(0, health - 1);
+    hygiene = Math.max(0, hygiene - 1);
   }
   updateUI();
 }, 300000); // 5 minutes
 
-// Health decreases every 30 minutes
+// hygiene decreases every 30 minutes
 setInterval(() => {
-  health = Math.max(0, health - 1);
+  hygiene = Math.max(0, hygiene - 1);
   updateUI();
 }, 1800000); // 30 minutes
 
@@ -170,3 +171,48 @@ document.getElementById("FeedButton").onclick = feed;
 document.getElementById("ShowerButton").onclick = shower;
 document.getElementById("PlayButton").onclick = play;
 document.getElementById("WorkButton").onclick = workFunction;
+
+// --- Music Player ---
+const tracks = [
+  { name: "Track 1", file: "sounds/track1.mp3" },
+  { name: "Track 2", file: "sounds/track2.mp3" },
+  { name: "Track 3", file: "sounds/track3.mp3" }
+];
+
+let currentTrackIndex = 0;
+let audioPlayer = new Audio(tracks[currentTrackIndex].file);
+audioPlayer.volume = 0.2;
+audioPlayer.loop = true;
+audioPlayer.play();
+
+const trackNameDisplay = document.getElementById("trackName");
+trackNameDisplay.textContent = tracks[currentTrackIndex].name;
+
+document.getElementById("nextTrack").onclick = () => {
+  currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+  switchTrack();
+};
+
+document.getElementById("prevTrack").onclick = () => {
+  currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+  switchTrack();
+};
+
+function switchTrack() {
+  audioPlayer.pause();
+  audioPlayer = new Audio(tracks[currentTrackIndex].file);
+  audioPlayer.volume = 0.5;
+  audioPlayer.loop = true;
+  audioPlayer.play();
+  trackNameDisplay.textContent = tracks[currentTrackIndex].name;
+}
+// --- Volume Slider ---
+const volumeSlider = document.getElementById("volumeSlider");
+
+// Set initial volume
+audioPlayer.volume = volumeSlider.value / 100;
+
+// Update volume in real time
+volumeSlider.addEventListener("input", () => {
+  audioPlayer.volume = volumeSlider.value / 100;
+});
