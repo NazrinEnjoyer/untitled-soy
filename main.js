@@ -41,92 +41,127 @@ setInterval(() => {
 }, 60000); // every minute
 
 // --- Update UI ---
-function updateUI() {
+function updateUI(statusPool) 
+{
   document.getElementById("Hunger").textContent = "Hunger: " + hunger;
-  document.getElementById("Hygiene").textContent = "hygiene: " + hygiene;
+  document.getElementById("Hygiene").textContent = "Hygiene: " + hygiene;
   document.getElementById("MoneyCount").textContent = "Money: $" + money;
   document.getElementById("Happy").textContent = "Happy: " + happy;
   document.getElementById("RopeChance").textContent = "Ropechance: %" + ropeChance;
-  document.getElementById("Status").textContent = "Status: " + getStatusLine();
+  document.getElementById("Status").textContent = "Status: " + getStatusLine(statusPool);
 
   checkGameOver(); // check if ropeChance maxed out
 }
 
-// --- Stupid Status Lines ---
-function getStatusLine() {
-  const statuses = [
-    "just vibing...",
+// --- Quippy Status Lines ---
+function getStatusLine(statusPool) {
+  const pool = statusPool;
+  if (!pool || pool.length === 0)
+  {
+    return "Fuck my chud life";
+  } 
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+const statusPools = {
+  statuses: [    "just vibing...",
     "life is pain",
     "capitalism is a scam",
     "ate today, still sad",
-    "boss gave pizza party...",,
     "dreaming of escape...",
     "billions must die...",
     "this time I'm really going to do it...",
-    "fuck my chud life",
-    "I'm so based...",
-    "...why won't she text back?",
     "It never even began...",
     "I wish I was gooning...",
     "I miss my computer...",
-    "I want to kill myself...",
-    
-  ];
-  return statuses[Math.floor(Math.random() * statuses.length)];
-}
+  ],
+    workStatusesEmployed: [
+    "I hate my job...",
+    "boss gave pizza party..."
+  ],
+  workStatusesUnEmployed: [
+    "Still unemployed..."
+  ],
+  playStatusesGood: [
+    "Today I played on the swings!",
+    "Had fun"
+  ],
+  playStatusesBad: [
+    "Saw Stacy outside today...",
+    "Cyberbullied"
+  ],
+  showerStatuses: [
+    "Are daily showers really necessary?"
+  ],
+  feedStatusesGood: [
+    "Yummy!"
+  ],
+  feedStatusesBad: [
+    "Can't afford food..."
+  ],
+  brokeStatuses: [
+    "BROKE! NIGGA! ALERT!"
+  ]
+};
 
 // --- Actions ---
 function feed() {
   playClick();
+  let statusPool;
   if (money >= 50) {
     money -= 50;
     hunger = Math.min(hunger + 5, 10);
+    statusPool = statusPools.feedStatusesGood;
   } else {
     ropeChance = Math.min(100, ropeChance + 5);
+    statusPool = statusPools.feedStatusesBad;
   }
-  updateUI();
+  updateUI(statusPool);
 }
 
 function shower() {
   playClick();
   hygiene = Math.min(hygiene + 5, 10);
-  updateUI();
+  updateUI(statusPools.showerStatuses);
 }
 
 function play() {
   playClick();
+  let statusPool;
   if (money >= 20) {
     money -= 20;
 
     // 70% chance ropeChance goes down, 30% chance it goes up slightly
     if (Math.random() < 0.7) {
       ropeChance = Math.max(0, ropeChance - 5);
-      alert("had fun");
+      statusPool = statusPools.playStatusesGood;
     } else {
       ropeChance = Math.min(100, ropeChance + 2);
-      alert("cyberbullied..");
+      statusPool = statusPools.playStatusesBad;
     }
   } else {
     // BROKE NIGGA ALERT
     ropeChance = Math.min(100, ropeChance + 5);
-    alert("BROKE! NIGGA! ALERT!");
+    statusPool.brokeStatuses
   }
 
-  updateUI();
+  updateUI(statusPool);
 }
 
 
 function workFunction() {
   playClick();
+  let statusPool;
   if (Math.random() < 0.5) {
     money += randomMath;
+    statusPool = statusPools.workStatusesEmployed;
   } else {
-    document.getElementById("Status").textContent = "Status: still unemployed...";
+    statusPool = statusPools.workStatusesUnEmployed;
   }
   ropeChance = Math.min(100, ropeChance + 5);
   hunger = Math.min(10, hunger -1);
   hygiene = Math.min(10, hygiene -1);
-  updateUI();
+  updateUI(statusPool);
 }
 
 // --- Game Over ---
