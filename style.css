@@ -115,3 +115,52 @@ body {
   100% { opacity: 1; }
 }
 
+/* --- Floating Music Player --- */
+/* --- Windows-95 Style Music Player --- */
+#music-player {
+  position: fixed;
+  top: 50px;
+  right: 20px;
+  width: 200px;
+  padding: 10px;
+  background: #c0c0c0; /* classic Win95 gray */
+  border: 2px solid #fff; 
+  border-right-color: #404040; 
+  border-bottom-color: #404040;
+  box-shadow: inset -1px -1px 0 #808080, inset 1px 1px 0 #fff;
+  font-family: 'MS Sans Serif', sans-serif;
+}
+
+#music-player h4 {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+#player-buttons {
+  text-align: center;
+  margin: 5px 0;
+}
+
+#player-buttons button {
+  width: 30px;
+  height: 25px;
+  font-size: 14px;
+  font-family: 'MS Sans Serif', sans-serif;
+  background: #c0c0c0;
+  border: 2px solid #fff;
+  border-right-color: #404040;
+  border-bottom-color: #404040;
+  cursor: pointer;
+}
+
+#player-buttons button:active {
+  border: 2px solid #404040;
+  border-right-color: #fff;
+  border-bottom-color: #fff;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff;
+}
+
+#volumeSlider {
+  width: 100%;
+  margin-top: 5px;
+}
