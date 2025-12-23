@@ -117,12 +117,20 @@ body {
 
 /* --- Floating Music Player --- */
 /* --- Windows-95 Style Music Player --- */
+#music-playerheader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: #280086;
+  color: #fff;
+}
+
 #music-player {
   position: fixed;
   top: 50px;
   right: 20px;
   width: 200px;
-  padding: 10px;
+  padding: 3px;
   background: #c0c0c0; /* classic Win95 gray */
   border: 2px solid #fff; 
   border-right-color: #404040; 
