@@ -130,21 +130,6 @@ function play() {
   updateUI(statusPool);
 }
 
-function workFunction() {
-  playClick();
-  let statusPool;
-  if (Math.random() < 0.5) {
-    money += randomMath;
-    statusPool = statusPools.workStatusesEmployed;
-  } else {
-    statusPool = statusPools.workStatusesUnEmployed;
-  }
-  ropeChance = Math.min(100, ropeChance + 5);
-  hunger = Math.min(10, hunger -1);
-  hygiene = Math.min(10, hygiene -1);
-  updateUI(statusPool);
-}
-
 // --- Game Over ---
 function checkGameOver() {
   if (ropeChance >= 100) {
@@ -194,4 +179,3 @@ updateUI();
 document.getElementById("FeedButton").onclick = feed;
 document.getElementById("ShowerButton").onclick = shower;
 document.getElementById("PlayButton").onclick = play;
-document.getElementById("WorkButton").onclick = workFunction;
