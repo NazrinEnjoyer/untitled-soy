@@ -1,8 +1,12 @@
-const currentJob = 
+let currentJob = 
 {
     title: "NEET",
     pay: 0
 }
+
+let message = 'Your current job is ' + currentJob.title;
+alert(message);
+
 
 const jobList = [
   testJob = 
@@ -19,28 +23,31 @@ const jobList = [
 
 function workFunction() {
   playClick();
+  let statusPool;
 
   if(currentJob.title === "NEET")
   {
     //display job list and apply
+    document.getElementById("jobListDiv").style.display = "block";
+    let ul = document.getElementById("jobList");
+    jobList.forEach(function(item)
+    {
+      let li = document.createElement('li');
+      li.appendChild(document.createTextNode(item.title));
+      ul.appendChild(li);
+    });
+
+    statusPool = statusPools.workStatusesUnEmployed;
   }
   else
   {
-    let statusPool;
-    if (Math.random() < 0.5) 
-    {
-      money += randomMath;
-      statusPool = statusPools.workStatusesEmployed;
-    } 
-  else 
-  {
-    statusPool = statusPools.workStatusesUnEmployed;
+    money += currentJob.pay;
+    statusPool = statusPools.workStatusesEmployed;
+    hunger = Math.min(10, hunger -1);
+    hygiene = Math.min(10, hygiene -1);
   }
   ropeChance = Math.min(100, ropeChance + 5);
-  hunger = Math.min(10, hunger -1);
-  hygiene = Math.min(10, hygiene -1);
   updateUI(statusPool);
-  }
 }
 
 document.getElementById("WorkButton").onclick = workFunction;

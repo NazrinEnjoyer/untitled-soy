@@ -18,7 +18,7 @@ const tracks =
 
 let currentTrackIndex = 0;
 let audioPlayer = new Audio(tracks[currentTrackIndex].file);
-audioPlayer.volume = 0.2;
+audioPlayer.volume = 0;
 audioPlayer.loop = true;
 audioPlayer.play();
 
@@ -38,7 +38,7 @@ document.getElementById("prevTrack").onclick = () => {
 function switchTrack() {
   audioPlayer.pause();
   audioPlayer = new Audio(tracks[currentTrackIndex].file);
-  audioPlayer.volume = 0.5;
+  audioPlayer.volume = volumeSlider.value / 100;
   audioPlayer.loop = true;
   audioPlayer.play();
   trackNameDisplay.textContent = tracks[currentTrackIndex].name;
