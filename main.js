@@ -116,7 +116,7 @@ function play() {
   } else {
     // BROKE NIGGA ALERT
     ropeChance = Math.min(100, ropeChance + 5);
-    statusPool.brokeStatuses
+    statusPool = statusPools.brokeStatuses
   }
 
   updateUI(statusPool);

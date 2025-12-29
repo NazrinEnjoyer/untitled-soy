@@ -33,8 +33,19 @@ function workFunction() {
     jobList.forEach(function(item)
     {
       let li = document.createElement('li');
-      li.appendChild(document.createTextNode(item.title));
+      li.appendChild(document.createTextNode(item.title + " "));
       ul.appendChild(li);
+      
+      let button = document.createElement('button');
+      button.appendChild(document.createTextNode("Apply?"));
+      button.onclick = function()
+      {
+        console.log("button click");
+        currentJob = item;
+        document.getElementById("jobListDiv").style.display = "none";
+      }
+
+      li.appendChild(button);
     });
 
     statusPool = statusPools.workStatusesUnEmployed;
