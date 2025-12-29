@@ -5,14 +5,6 @@ let money = 0;
 let happy = 0; // stays at 0
 let ropeChance = 0;
 
-// --- Wagie Math
-let mathMin = 20;
-let mathMax = 60;
-let randomMath = Math.floor(Math.random() * (mathMax - mathMin + 1)) + mathMin;
-let message = 'Your Wage is $' + randomMath + ' Per Shift';
-
-alert(message);
-
 /* // -- Restart Button --
 function restart() {
 hunger = 10;
@@ -124,7 +116,7 @@ function play() {
   } else {
     // BROKE NIGGA ALERT
     ropeChance = Math.min(100, ropeChance + 5);
-    statusPool.brokeStatuses
+    statusPool = statusPools.brokeStatuses
   }
 
   updateUI(statusPool);
